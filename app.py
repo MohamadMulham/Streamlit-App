@@ -1,8 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib
-matplotlib.use('TkAgg')  # Use the TkAgg backend
-import matplotlib.pyplot as plt
 
 
 
