@@ -3,6 +3,7 @@ import pandas as pd
 
 
 
+
 st.set_page_config(
         page_title="Water Calculator",
         layout="wide",
@@ -21,28 +22,28 @@ famNum= st.number_input("Enter the number of family members", 2)
 st.subheader("Duration of usage(Minutes)")
 col1, col2, col3, col4= st.columns(4)
 with col1:# Shower head time 
-    showerTime = st.number_input("Showerhead", 10)
+    showerTime = st.number_input("Showerhead", value=10, min_value=0)
 with col2:# Bathroom Faucet
-    bathroomTime = st.number_input("Bathroom Faucet", 6)
+    bathroomTime = st.number_input("Bathroom Faucet", value= 6, min_value=0)
 with col3:# Kitchen Faucet
-    kitchenTime = st.number_input("Kitchen Faucet", 8)
+    kitchenTime = st.number_input("Kitchen Faucet",  value=8, min_value=0)
 with col4:# Washing Dishes(manually)
-    mDishTime = st.number_input("Washing Dishes(Manual)", 5)
+    mDishTime = st.number_input("Washing Dishes(Manual)",  value=5, min_value=0)
 
 st.subheader("Frequency of usage(Weekly)")
 col1, col2, col3, col4= st.columns(4)
 with col1:# Shower head time 
-    showerFreq = st.number_input("Showerhead", 5, key="showerFreq")
-    carFreq = st.number_input("Car Washing", 1, key="carFreq")
+    showerFreq = st.number_input("Showerhead", value=5, key="showerFreq", min_value=0)
+    carFreq = st.number_input("Car Washing",  value=1, key="carFreq", min_value=0)
 with col2:# Bathroom Faucet
-    bathroomFreq = st.number_input("Bathroom Faucet", 7, key="bathroomFreq")
-    toiletFreq = st.number_input("Toilet Flush", 14, key="toiletFreq")
+    bathroomFreq = st.number_input("Bathroom Faucet",  value=7, key="bathroomFreq", min_value=0)
+    toiletFreq = st.number_input("Toilet Flush",  value=14, key="toiletFreq", min_value=0)
 with col3:# Kitchen Faucet
-    kitchenFreq = st.number_input("Kitchen Faucet", 7, key="kitchenFreq")
-    aDishFreq = st.number_input("Dishwasher", 5, key="aDishFreq")
+    kitchenFreq = st.number_input("Kitchen Faucet",  value=7, key="kitchenFreq", min_value=0)
+    aDishFreq = st.number_input("Dishwasher", value= 5, key="aDishFreq", min_value=0)
 with col4:# Washing Dishes(manually)
-    mDishFreq = st.number_input("Washing Dishes(Manual)", 7, key="mDishFreq")
-    clothesFreq = st.number_input("Clothes Washer", 3, key="clothesFreq")
+    mDishFreq = st.number_input("Washing Dishes(Manual)",  value=7, key="mDishFreq", min_value=0)
+    clothesFreq = st.number_input("Clothes Washer",  value=3, key="clothesFreq", min_value=0)
 
 
 
