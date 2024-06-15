@@ -191,7 +191,7 @@ ideal = {
 if(emirate =="Dubai"):
     ideal['Toilet Flush']= round(3*toiletFreq*famNum, 3)
 elif(emirate == "Abu Dhabi"):
-    ideal['Toilet Flush']= round(4*toiletFreq*famNum, 3)
+    ideal['Toilet Flush']= round(4*toiletFreq*famNum, 4)
 saved = {key: round((consumed[key] - ideal[key]), 3) for key in consumed}
 
 wantedTimeFrame =1.0
