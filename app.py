@@ -49,7 +49,92 @@ with col4:# Washing Dishes(manually)
 
 bathFreq = st.number_input("Bathtub", 1)
 bathType= st.selectbox("Choose your Bathtub Type", ["Medium", "Small", "Large"])
-toleranceLimit= st.number_input("Water conservation tolerance limit", 150)
+toleranceLimit= st.number_input("Water conservation tolerance limit", 100)
+
+showerValue=0
+faucetValue=0
+aDishValue=0
+clothesValue=0
+
+
+# This the section for the replacements
+col1, col2, col3, col4= st.columns(4)
+with col1:
+    showerReplace= st.selectbox("Choose your showerhead replacement",
+                                ["Niagara Earth Massage Showerhead",
+                                "High Sierra 1.5 GPM Showerhead",
+                                "EcoSmart ECO 2.5 GPM Showerhead",
+                                ])
+with col2:
+    faucetReplace= st.selectbox("Choose your faucet replacement",
+                                ["Niagara Conservation Earth® Lavatory Faucet Aerator",
+                                "Delta Faucet Lahara Single-Handle Bathroom Faucet",
+                                "Kohler K-72760-CP Artifacts Bathroom Sink Spout with Low-Flow Aerator",
+                                ])
+
+with col3:
+    aDishReplace = st.selectbox("Choose your dishwasher replacement",
+                                ["Bosch 300 Series Dishwasher",
+                                "Miele EcoFlex Dishwasher",
+                                "Whirlpool Energy Star Dishwasher",
+                                ])
+
+with col4:
+    clothesReplace= st.selectbox("Choose your washing machine replacement",
+                                ["Samsung ActiveWater Front Load Washer",
+                                "LG TrueBalance Washer",
+                                "Bosch 800 Series Front Load Washer",
+                                ])
+
+
+match showerReplace:
+    case "Niagara Earth Massage Showerhead":
+        showerValue= 6
+        print('da')
+
+    case "High Sierra 1.5 GPM Showerhead":
+        showerValue= 5.7
+
+    case "EcoSmart ECO 2.5 GPM Showerhead":
+        showerValue= 5.7
+ 
+
+match faucetReplace:
+    case "Niagara Conservation Earth® Lavatory Faucet Aerator":
+        faucetValue=3.8
+
+    case "Delta Faucet Lahara Single-Handle Bathroom Faucet":
+        faucetValue=3.8
+
+    case "Kohler K-72760-CP Artifacts Bathroom Sink Spout with Low-Flow Aerator":
+        faucetValue=3.8
+    
+
+
+
+
+match aDishReplace:
+    case "Bosch 300 Series Dishwasher":
+        aDishValue= 13
+
+    case "Miele EcoFlex Dishwasher":
+        aDishValue= 10
+
+    case "Whirlpool Energy Star Dishwasher":
+        aDishValue= 12
+    
+
+match clothesReplace:
+    case "Samsung ActiveWater Front Load Washer":
+        clothesValue=60
+
+    case "LG TrueBalance Washer":
+        clothesValue=75
+
+    case "Bosch 800 Series Front Load Washer":
+        clothesValue=75
+    
+
 
 
 
@@ -88,17 +173,25 @@ if(bathType=="Medium"):
 if(bathType=="Large"):
     consumed['Bathtub'] = 416*bathFreq*famNum
 
+
+
+
 ideal = {
-        'Shower': round(5.6*showerTime*showerFreq*famNum,3),
-        'Bathroom Faucet': round(3.8 *bathroomTime*bathroomFreq*famNum, 3),
-        'Kitchen Faucet': round(3.8*kitchenTime*kitchenFreq*famNum, 3),
-        'Washing Dishes(Manual)': round(3.8*mDishTime*mDishFreq*famNum, 3),
+        'Shower': round(showerValue*showerTime*showerFreq*famNum,3),
+        'Bathroom Faucet': round(faucetValue *bathroomTime*bathroomFreq*famNum, 3),
+        'Kitchen Faucet': round(faucetValue*kitchenTime*kitchenFreq*famNum, 3),
+        'Washing Dishes(Manual)': round(faucetValue*mDishTime*mDishFreq*famNum, 3),
         'Car Washing': round(19*carFreq*famNum, 3),
         'Bathtub': 0,
-        'Toilet Flush': round(4.8*toiletFreq*famNum, 3),
-        'Dishwasher': round(22*aDishFreq*famNum, 3),
-        'Clothes Washing': round(60*clothesFreq*famNum, 3),
+        'Toilet Flush': 0,
+        'Dishwasher': round(aDishValue*aDishFreq*famNum, 3),
+        'Clothes Washing': round(showerValue*clothesFreq*famNum, 3),
         }
+
+if(emirate =="Dubai"):
+    ideal['Toilet Flush']= round(3*toiletFreq*famNum, 3)
+elif(emirate == "Abu Dhabi"):
+    ideal['Toilet Flush']= round(4*toiletFreq*famNum, 3)
 saved = {key: round((consumed[key] - ideal[key]), 3) for key in consumed}
 
 wantedTimeFrame =1.0
@@ -137,6 +230,8 @@ savedTable.index = [tableType]
 savedTable = savedTable.mul(wantedTimeFrame)
 savedTable = savedTable.round(2)
 savedTable = savedTable.applymap("{:.2f}".format)
+
+
 
 
 
