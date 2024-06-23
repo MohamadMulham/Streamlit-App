@@ -16,7 +16,7 @@ st.set_page_config(
 st.markdown('<div class="vertical-end">', unsafe_allow_html=True)
 st.title("Water Conservation Calculator 💧")
 emirate= st.selectbox("Choose your residing Emirate", ["Dubai", "Abu Dhabi"])
-famNum= st.number_input("Enter the number of family members", 2)
+famNum= st.number_input("Enter the number of family members", 5)
 
 
 st.subheader("Duration of usage(Minutes)")
@@ -35,28 +35,62 @@ col1, col2, col3, col4= st.columns(4)
 with col1:# Shower head time 
     showerFreq = st.number_input("Showerhead", value=5, key="showerFreq", min_value=0)
     carFreq = st.number_input("Car Washing",  value=1, key="carFreq", min_value=0)
+    bathFreq = st.number_input("Bathtub", 1)
+    
 with col2:# Bathroom Faucet
     bathroomFreq = st.number_input("Bathroom Faucet",  value=7, key="bathroomFreq", min_value=0)
-    toiletFreq = st.number_input("Toilet Flush",  value=14, key="toiletFreq", min_value=0)
+    toiletFreq = st.number_input("Toilet Flush",  value=13, key="toiletFreq", min_value=0)
+    bathType= st.selectbox("Choose your Bathtub Type", ["Medium", "Small", "Large"])
+    
 with col3:# Kitchen Faucet
     kitchenFreq = st.number_input("Kitchen Faucet",  value=7, key="kitchenFreq", min_value=0)
     aDishFreq = st.number_input("Dishwasher", value= 5, key="aDishFreq", min_value=0)
+    bathFilled= st.selectbox("How much do you fill up the bathtub out of 100%", [70, 50, 90])
 with col4:# Washing Dishes(manually)
     mDishFreq = st.number_input("Washing Dishes(Manual)",  value=7, key="mDishFreq", min_value=0)
     clothesFreq = st.number_input("Clothes Washer",  value=3, key="clothesFreq", min_value=0)
+    toiletFlushed= st.selectbox("What is the most commonly used flushing method", ["Balanced", "Half", "Full"])
 
 
 
-bathFreq = st.number_input("Bathtub", 1)
-bathType= st.selectbox("Choose your Bathtub Type", ["Medium", "Small", "Large"])
-toleranceLimit= st.number_input("Water conservation tolerance limit", 100)
+st.subheader("Irrigation")
+col1, col2, col3= st.columns(3)
+with col1:
+    irrigationUse = st.number_input("Irrigation Water Usage", value= 0, key="irrigationUse", min_value=0)
+
+    
+with col2:
+    irrigationFreq = st.number_input("Irrigation Water Frequency per Week", value= 0, key="irrigationFreq", min_value=0)
+
+    
+with col3:
+    irrigationGrey = st.number_input("Greywater Recycling Percentage (0% to 35%)", value= 0, key="irrigationGrey", min_value=0, max_value=35)
+
+
+
+
+
+st.subheader("Cost of Water")
+
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    toleranceLimit= st.number_input("Water conservation tolerance limit (Litre/Week)", 100)
+
+with col2:
+    minWaterPrice=  st.number_input("Lower Use Rate Price (AED/Cubic) ", 7.84)  *(1/1000) #Converts it from AED/Cubic meter to AED/Litre
+
+with col3:
+    maxWaterPrice= st.number_input("Higher Use Rate Price (AED/Cubic)", 10.41)  *(1/1000) #Converts it from AED/Cubic meter to AED/Litre
+
+with col4:
+    waterUseLimit= st.number_input("The water rate limit (Cubic Meter/Day)", 0.7)*(30416.7) #Converts it from cubic meter/day to litre/week
 
 showerValue=0
 faucetValue=0
 aDishValue=0
 clothesValue=0
 
-
+st.subheader("Replacements")
 # This the section for the replacements
 col1, col2, col3, col4= st.columns(4)
 with col1:
@@ -90,7 +124,6 @@ with col4:
 match showerReplace:
     case "Niagara Earth Massage Showerhead":
         showerValue= 6
-        print('da')
 
     case "High Sierra 1.5 GPM Showerhead":
         showerValue= 5.7
@@ -149,9 +182,10 @@ if(emirate=="Dubai"):
         'Washing Dishes(Manual)': 7*mDishTime*mDishFreq*famNum,
         'Car Washing': 274*carFreq*famNum,
         'Bathtub': 0,
-        'Toilet Flush': 5*toiletFreq*famNum,
+        'Toilet Flush': 0,
         'Dishwasher': 43*aDishFreq*famNum,
         'Clothes Washing': 151*clothesFreq*famNum,
+        'Irrigation':0,
         }
 elif (emirate=="Abu Dhabi"):
     consumed = {
@@ -161,19 +195,34 @@ elif (emirate=="Abu Dhabi"):
         'Washing Dishes(Manual)': 6.0*mDishTime*mDishFreq*famNum,
         'Car Washing': 274*carFreq*famNum,
         'Bathtub': 0,
-        'Toilet Flush': 6*toiletFreq*famNum,
+        'Toilet Flush': 0,
         'Dishwasher': 43*aDishFreq*famNum,
         'Clothes Washing': 151*clothesFreq*famNum,
+        'Irrigation':0,
         }
-    
+
+if(bathType=="Small"):
+    consumed['Bathtub'] = 151*bathFreq*famNum*bathFilled/100
+elif(bathType=="Medium"):
+    consumed['Bathtub'] = 302*bathFreq*famNum*bathFilled/100
+elif(bathType=="Large"):
+    consumed['Bathtub'] = 416*bathFreq*famNum*bathFilled/100
+
+
+
 if(bathType=="Small"):
     consumed['Bathtub'] = 151*bathFreq*famNum
-if(bathType=="Medium"):
+elif(bathType=="Medium"):
     consumed['Bathtub'] = 302*bathFreq*famNum
-if(bathType=="Large"):
+elif(bathType=="Large"):
     consumed['Bathtub'] = 416*bathFreq*famNum
 
+if(toiletFlushed =="Full"):       consumed['Toilet Flush'] =round(6*toiletFreq*famNum, 3)
+elif(toiletFlushed =="Half"):     consumed['Toilet Flush'] = round(3*toiletFreq*famNum, 3)
+elif(toiletFlushed =="Balanced"): consumed['Toilet Flush'] = round(4.5*toiletFreq*famNum, 3)
 
+greyWater = consumed['Clothes Washing'] +  consumed['Dishwasher'] +  consumed['Bathtub'] +  consumed['Washing Dishes(Manual)'] +  consumed['Shower'] +  consumed['Bathroom Faucet'] 
+consumed["Irrigation"] = irrigationUse*irrigationFreq - greyWater*irrigationGrey
 
 
 ideal = {
@@ -189,15 +238,20 @@ ideal = {
         }
 
 if(emirate =="Dubai"):
-    ideal['Toilet Flush']= round(3*toiletFreq*famNum, 3)
+    ideal['Toilet Flush'] = round(3*toiletFreq*famNum, 3)
 elif(emirate == "Abu Dhabi"):
-    ideal['Toilet Flush']= round(4*toiletFreq*famNum, 4)
+    ideal['Toilet Flush'] = round(4*toiletFreq*famNum, 3)
+
+
+greyWater = ideal['Clothes Washing'] +  ideal['Dishwasher'] +  ideal['Bathtub'] +  ideal['Washing Dishes(Manual)'] +  ideal['Shower'] +  ideal['Bathroom Faucet'] 
+ideal["Irrigation"] = irrigationUse*irrigationFreq - greyWater*0.35
+
 saved = {key: round((consumed[key] - ideal[key]), 3) for key in consumed}
 
-wantedTimeFrame =1.0
-tableType="Weekly"
+wantedTimeFrame =4
+tableType="Monthly"
 
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
     if st.button("Daily"):
         wantedTimeFrame=1/7
@@ -206,7 +260,12 @@ with col2:
     if st.button("Weekly"):
         wantedTimeFrame=1
         tableType="Weekly"
+
 with col3:
+    if st.button("Monthly"):
+        wantedTimeFrame=4
+        tableType="Monthly"
+with col4:
     if st.button("Yearly"):
         wantedTimeFrame=365/7
         tableType="Yearly"
@@ -245,10 +304,15 @@ st.table(savedTable)
 
 totalSavedAmount=round(sum(saved.values())*wantedTimeFrame, 2)
 
-statement = f"<p style='font-size: 24px;'>The total Savings Are: <span style='color: #6495ED; font-weight: bold; text-decoration: underline; font-size:40px'>{totalSavedAmount}</span> Litres {tableType}</p>"
+statement = f"<p style='font-size: 24px;'>The Total Water Savings Are: <span style='color: #6495ED; font-weight: bold; text-decoration: underline; font-size:40px'>{totalSavedAmount}</span> Litres {tableType}</p>"
 st.markdown(statement, unsafe_allow_html=True)
 
-
+if (totalSavedAmount <= waterUseLimit*wantedTimeFrame):
+    totalPrice = round(minWaterPrice*totalSavedAmount, 1)
+else:
+    totalPrice = round(maxWaterPrice*totalSavedAmount, 1)
+statement = f"<p style='font-size: 24px;'>The Total Money Savings Are: <span style='color: #52cc00; font-weight: bold; text-decoration: underline; font-size:40px'>{totalPrice}</span> AED {tableType}</p>"
+st.markdown(statement, unsafe_allow_html=True)
 def highlight_cell(x):
     try:
         if float(x) < toleranceLimit*wantedTimeFrame:
