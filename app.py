@@ -41,7 +41,7 @@ with col2:# Bathroom Faucet
     bathroomFreq = st.number_input("Bathroom Faucet",  value=7, key="bathroomFreq", min_value=0)
     toiletFreq = st.number_input("Toilet Flush",  value=13, key="toiletFreq", min_value=0)
     bathType= st.selectbox("Choose your Bathtub Type", ["Medium", "Small", "Large"])
-    
+        
 with col3:# Kitchen Faucet
     kitchenFreq = st.number_input("Kitchen Faucet",  value=7, key="kitchenFreq", min_value=0)
     aDishFreq = st.number_input("Dishwasher", value= 5, key="aDishFreq", min_value=0)
