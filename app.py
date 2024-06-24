@@ -16,7 +16,7 @@ st.set_page_config(
 st.markdown('<div class="vertical-end">', unsafe_allow_html=True)
 st.title("Water Conservation Calculator 💧")
 emirate= st.selectbox("Choose your residing Emirate", ["Dubai", "Abu Dhabi"])
-famNum= st.number_input("Enter the number of family members", 5)
+famNum= st.number_input("Enter the number of family members", value =5, min_value=1)
 
 
 st.subheader("Duration of usage(Minutes)")
@@ -35,7 +35,7 @@ col1, col2, col3, col4= st.columns(4)
 with col1:# Shower head time 
     showerFreq = st.number_input("Showerhead", value=5, key="showerFreq", min_value=0)
     carFreq = st.number_input("Car Washing",  value=1, key="carFreq", min_value=0)
-    bathFreq = st.number_input("Bathtub", 1)
+    bathFreq = st.number_input("Bathtub", value =1, min_value=0)
     
 with col2:# Bathroom Faucet
     bathroomFreq = st.number_input("Bathroom Faucet",  value=7, key="bathroomFreq", min_value=0)
