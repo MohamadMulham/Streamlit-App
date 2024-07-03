@@ -210,13 +210,6 @@ elif(bathType=="Large"):
 
 
 
-if(bathType=="Small"):
-    consumed['Bathtub'] = 151*bathFreq*famNum
-elif(bathType=="Medium"):
-    consumed['Bathtub'] = 302*bathFreq*famNum
-elif(bathType=="Large"):
-    consumed['Bathtub'] = 416*bathFreq*famNum
-
 if(toiletFlushed =="Full"):       consumed['Toilet Flush'] =round(6*toiletFreq*famNum, 3)
 elif(toiletFlushed =="Half"):     consumed['Toilet Flush'] = round(3*toiletFreq*famNum, 3)
 elif(toiletFlushed =="Balanced"): consumed['Toilet Flush'] = round(4.5*toiletFreq*famNum, 3)
@@ -234,13 +227,13 @@ ideal = {
         'Bathtub': 0,
         'Toilet Flush': 0,
         'Dishwasher': round(aDishValue*aDishFreq*famNum, 3),
-        'Clothes Washing': round(showerValue*clothesFreq*famNum, 3),
+        'Clothes Washing': round(clothesValue*clothesFreq*famNum, 3),
         }
 
 if(emirate =="Dubai"):
     ideal['Toilet Flush'] = round(3*toiletFreq*famNum, 3)
 elif(emirate == "Abu Dhabi"):
-    ideal['Toilet Flush'] = round(4*toiletFreq*famNum, 3)
+    ideal['Toilet Flush'] = round(4*toiletFreq*famNum, 4)
 
 
 greyWater =  ideal['Shower'] + ideal['Bathroom Faucet'] + ideal['Washing Dishes(Manual)'] + ideal['Bathtub'] + ideal['Dishwasher'] + ideal['Clothes Washing'] + ideal['Kitchen Faucet']
