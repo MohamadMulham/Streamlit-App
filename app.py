@@ -244,7 +244,7 @@ elif(emirate == "Abu Dhabi"):
 
 
 greyWater =  ideal['Shower'] + ideal['Bathroom Faucet'] + ideal['Washing Dishes(Manual)'] + ideal['Bathtub'] + ideal['Dishwasher'] + ideal['Clothes Washing'] + ideal['Kitchen Faucet']
-ideal["Irrigation"] = irrigationUse*irrigationFreq - greyWater*0.35
+ideal["Irrigation"] = irrigationUse*irrigationFreq - greyWater*0.35 if(irrigationUse*irrigationFreq - greyWater*0.35>0) else 0
 
 saved = {key: round((consumed[key] - ideal[key]), 3) for key in consumed}
 
