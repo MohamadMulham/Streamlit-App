@@ -221,7 +221,7 @@ if(toiletFlushed =="Full"):       consumed['Toilet Flush'] =round(6*toiletFreq*f
 elif(toiletFlushed =="Half"):     consumed['Toilet Flush'] = round(3*toiletFreq*famNum, 3)
 elif(toiletFlushed =="Balanced"): consumed['Toilet Flush'] = round(4.5*toiletFreq*famNum, 3)
 
-greyWater = consumed['Clothes Washing'] +  consumed['Dishwasher'] +  consumed['Bathtub'] +  consumed['Washing Dishes(Manual)'] +  consumed['Shower'] +  consumed['Bathroom Faucet'] 
+greyWater =  consumed['Shower'] + consumed['Bathroom Faucet'] + consumed['Washing Dishes(Manual)'] + consumed['Bathtub'] + consumed['Dishwasher'] + consumed['Clothes Washing'] + consumed['Kitchen Faucet']
 consumed["Irrigation"] = irrigationUse*irrigationFreq - greyWater*irrigationGrey
 
 
@@ -243,7 +243,7 @@ elif(emirate == "Abu Dhabi"):
     ideal['Toilet Flush'] = round(4*toiletFreq*famNum, 3)
 
 
-greyWater = ideal['Clothes Washing'] +  ideal['Dishwasher'] +  ideal['Bathtub'] +  ideal['Washing Dishes(Manual)'] +  ideal['Shower'] +  ideal['Bathroom Faucet'] 
+greyWater =  ideal['Shower'] + ideal['Bathroom Faucet'] + ideal['Washing Dishes(Manual)'] + ideal['Bathtub'] + ideal['Dishwasher'] + ideal['Clothes Washing'] + ideal['Kitchen Faucet']
 ideal["Irrigation"] = irrigationUse*irrigationFreq - greyWater*0.35
 
 saved = {key: round((consumed[key] - ideal[key]), 3) for key in consumed}
