@@ -84,7 +84,6 @@ with col3:
 
 with col4:
     waterUseLimit= st.number_input("The water rate limit (Cubic Meter/Day)", 0.7)*(7e3) #Converts it from cubic meter/day to litre/week
-    print(7e3)
 
 showerValue=0
 faucetValue=0
