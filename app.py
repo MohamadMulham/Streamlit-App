@@ -83,7 +83,8 @@ with col3:
     maxWaterPrice= st.number_input("Higher Use Rate Price (AED/Cubic)", 10.41)  *(1/1000) #Converts it from AED/Cubic meter to AED/Litre
 
 with col4:
-    waterUseLimit= st.number_input("The water rate limit (Cubic Meter/Day)", 0.7)*(30416.7) #Converts it from cubic meter/day to litre/week
+    waterUseLimit= st.number_input("The water rate limit (Cubic Meter/Day)", 0.7)*(7e3) #Converts it from cubic meter/day to litre/week
+    print(7e3)
 
 showerValue=0
 faucetValue=0
