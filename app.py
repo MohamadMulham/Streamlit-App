@@ -261,7 +261,7 @@ with col3:
         tableType="Monthly"
 with col4:
     if st.button("Yearly"):
-        wantedTimeFrame=365/7
+        wantedTimeFrame=48
         tableType="Yearly"
 
 consumedTable = pd.DataFrame([consumed])
